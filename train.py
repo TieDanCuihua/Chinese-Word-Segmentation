@@ -174,20 +174,6 @@ def precision(y_true, y_pred):
 
 	return precision
 
-# def bilstm_model():
-# 	"""
-# 	Bilstm model
-# 	:return: model
-# 	"""
-# 	LEN = 2000000
-# 	visible = Input(shape=(None,))
-# 	em = Embedding(LEN,64,input_length=None,mask_zero=True)(visible)
-# 	hidden = Bidirectional(LSTM(256,return_sequences=True,dropout=0.6,recurrent_dropout=0.4),merge_mode='sum')(em)
-# 	output = TimeDistributed(Dense(4,activation='softmax'))(hidden)
-# 	model = Model(inputs=visible, outputs=output)
-# 	model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.035, momentum=0.95), metrics=['accuracy',precision])
-# 	return model
-
 def bilstm_model(inputs,reuse=False):
 	LEN = 2000000
 	with tf.variable_scope('build_mode',reuse=reuse):
@@ -246,68 +232,3 @@ if __name__ == '__main__':
 				print('loss is',c)
 			print("avg cost in the training phase epoch {}: {}".format(epoch, avg_cost))
 			saver.save(sess,'./model.ckpt')
-	# Plot training & validation precision values
-	plt.plot(history.history['precision'])
-	plt.plot(history.history['val_precision'])
-	plt.title('Model Precision')
-	plt.ylabel('Precision')
-	plt.xlabel('Epoch')
-	plt.legend(['Train', 'Test'], loc='upper left')
-	plt.show()
-
-	# Plot training & validation accuracy values
-	plt.plot(history.history['acc'])
-	plt.plot(history.history['val_acc'])
-	plt.title('Model accuracy')
-	plt.ylabel('Accuracy')
-	plt.xlabel('Epoch')
-	plt.legend(['Train', 'Test'], loc='upper left')
-	plt.show()
-
-	# Plot training & validation loss values
-	plt.plot(history.history['loss'])
-	plt.plot(history.history['val_loss'])
-	plt.title('Model loss')
-	plt.ylabel('Loss')
-	plt.xlabel('Epoch')
-	plt.legend(['Train', 'Test'], loc='upper left')
-	plt.show()
-
-# if __name__ == '__main__':
-# 	word2index()
-# 	X_train_uni = tokenize_dataset()
-# 	Y_train = encode_y()
-#
-# 	train_x_uni_padded,train_y_padded = pad_data(X_train_uni,Y_train)
-# 	model = bilstm_model()
-# 	filepath = "weights.{epoch:02d}-{val_loss:.2f}.hdf5"
-# 	mc = ModelCheckpoint(filepath, monitor='val_precision', verbose=1, save_best_only=True, mode='max')
-# 	print("Training")
-# 	history = model.fit(train_x_uni_padded,train_y_padded,batch_size=256, epochs=20, verbose=1,shuffle=True,validation_split=0.2,callbacks=[mc])
-#
-# 	# Plot training & validation precision values
-# 	plt.plot(history.history['precision'])
-# 	plt.plot(history.history['val_precision'])
-# 	plt.title('Model Precision')
-# 	plt.ylabel('Precision')
-# 	plt.xlabel('Epoch')
-# 	plt.legend(['Train', 'Test'], loc='upper left')
-# 	plt.show()
-#
-# 	# Plot training & validation accuracy values
-# 	plt.plot(history.history['acc'])
-# 	plt.plot(history.history['val_acc'])
-# 	plt.title('Model accuracy')
-# 	plt.ylabel('Accuracy')
-# 	plt.xlabel('Epoch')
-# 	plt.legend(['Train', 'Test'], loc='upper left')
-# 	plt.show()
-#
-# 	# Plot training & validation loss values
-# 	plt.plot(history.history['loss'])
-# 	plt.plot(history.history['val_loss'])
-# 	plt.title('Model loss')
-# 	plt.ylabel('Loss')
-# 	plt.xlabel('Epoch')
-# 	plt.legend(['Train', 'Test'], loc='upper left')
-# 	plt.show()
